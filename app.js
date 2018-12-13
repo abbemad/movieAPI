@@ -22,8 +22,8 @@ movieRouter.route('/Movies')
     .post(function(req,res){
         let movie = new Movie(req.body);
         
-        console.log(book);
-        res.send(book);
+        console.log(movie);
+        res.send(movie);
 
     })
 
