@@ -23,7 +23,10 @@ movieRouter.route('/Movies')
         let movie = new Movie(req.body);
         
         console.log(movie);
-        res.send(movie);
+
+        movie.save();
+        res.status(201).send(movie);
+        // res.send(movie);
 
     })
 
