@@ -31,7 +31,9 @@ movieRouter.route('/Movies')
     })
 
     .get(function(req,res){
-        Movie.find(function(err,movies){
+        let query = req.query;
+
+        Movie.find(query, function(err,movies){
           if(err)
               res.status(500).send(err);
              else 
