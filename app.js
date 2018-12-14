@@ -31,7 +31,11 @@ movieRouter.route('/Movies')
     })
 
     .get(function(req,res){
-        let query = req.query;
+        let query = {};
+
+        if(req.query.genre){
+            query.genre = req.query.genre;
+        }
 
         Movie.find(query, function(err,movies){
           if(err)
