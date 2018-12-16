@@ -45,8 +45,18 @@ movieRouter.route('/Movies')
         });
     });
 
-app.use('/api', movieRouter);
+movieRouter.route('/Movies/:movieId')
+    .get(function(req,res){
+    
+        Movie.findById(req.params.movieId, function(err,movies){
+        if(err)
+            res.status(500).send(err);
+            else 
+                res.json(movies); 
+        });
+    });
 
+app.use('/api', movieRouter);
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
