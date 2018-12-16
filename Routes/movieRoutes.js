@@ -47,7 +47,7 @@ let routes = function (Movie){
 
     movieRouter.route('/:movieId')
         .get(function(req,res){
-            
+
             res.json(req.movie);
             // Movie.findById(req.params.movieId, function(err,movie){
             // if(err)
@@ -61,8 +61,29 @@ let routes = function (Movie){
             req.movie.actor = req.body.actor;
             req.movie.genre = req.body.genre;
             req.movie.available = req.body.available;
-            req.movie.save ();
-            res.json(req.movie);
+            req.movie.save (function(err){
+                if(err)
+                    res.status(500).send(err);
+                else{
+                    res.json(req.movie);
+                }  
+            });
+        })
+        .patch(function(req,res){
+            if(req.body._id)
+                delete req.body._id;
+
+            for(let p in req.body){
+                req.movie[p] = req.body[p];
+            }
+
+            req.movie.save(function(err){
+                if(err)
+                    res.status(500).send(err);
+                else{
+                    res.json(req.movie);
+                }  
+            });
         });
     return movieRouter;
 };
