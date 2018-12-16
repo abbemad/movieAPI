@@ -31,30 +31,39 @@ let routes = function (Movie){
             });
         });
     
-    movieRouter.route('/:movieId')
-        .get(function(req,res){
-        
-            Movie.findById(req.params.movieId, function(err,movie){
+    movieRouter.use('/:movieId', function(req,res,next){
+        Movie.findById(req.params.movieId, function(err,movie){
             if(err)
                 res.status(500).send(err);
-                else 
-                    res.json(movie); 
+                else if(movie){
+                    req.movie = movie;
+                    next();
+                }
+                    else{
+                        res.status(404).send('Movie not found');
+                    }
             });
+    });
+
+    movieRouter.route('/:movieId')
+        .get(function(req,res){
+            
+            res.json(req.movie);
+            // Movie.findById(req.params.movieId, function(err,movie){
+            // if(err)
+            //     res.status(500).send(err);
+            //     else 
+            //         res.json(movie); 
+            // });
         })
         .put(function(req,res){
-
-            Movie.findById(req.params.movieId, function(err,movie){
-                if(err)
-                    res.status(500).send(err);
-                    else 
-                        movie.title = req.body.title;
-                        movie.actor = req.body.actor;
-                        movie.genre = req.body.genre;
-                        movie.available = req.body.available;
-                        movie.save ();
-                        res.json(movie); 
-                });
-        })
+            req.movie.title = req.body.title;
+            req.movie.actor = req.body.actor;
+            req.movie.genre = req.body.genre;
+            req.movie.available = req.body.available;
+            req.movie.save ();
+            res.json(req.movie);
+        });
     return movieRouter;
 };
 
