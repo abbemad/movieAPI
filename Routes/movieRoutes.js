@@ -84,6 +84,15 @@ let routes = function (Movie){
                     res.json(req.movie);
                 }  
             });
+        })
+        .delete(function(req,res){
+            req.movie.remove(function(err){
+                if (err)
+                    res.status(500).send(err);
+                else{
+                    res.status(204).send('Removed');
+                }
+            });
         });
     return movieRouter;
 };
