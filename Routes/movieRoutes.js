@@ -41,6 +41,20 @@ let routes = function (Movie){
                     res.json(movie); 
             });
         })
+        .put(function(req,res){
+
+            Movie.findById(req.params.movieId, function(err,movie){
+                if(err)
+                    res.status(500).send(err);
+                    else 
+                        movie.title = req.body.title;
+                        movie.actor = req.body.actor;
+                        movie.genre = req.body.genre;
+                        movie.available = req.body.available;
+                        movie.save ();
+                        res.json(movie); 
+                });
+        })
     return movieRouter;
 };
 
