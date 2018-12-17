@@ -16,6 +16,15 @@ app.use(bodyParser.json());
 
 movieRouter = require('./Routes/movieRoutes')(Movie);
 
+app.use(function(req, res, next){
+    if (req.accepts('json')){
+        next();
+    }   
+    else {
+        res.sendStatus(406);
+    }
+});
+
 app.use('/api/movies', movieRouter);
 // app.use('/api/actors', actorRouter);
 
