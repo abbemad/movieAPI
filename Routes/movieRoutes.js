@@ -29,6 +29,11 @@ let routes = function (Movie){
                  else 
                     res.json(movies); 
             });
+        })
+
+        .options(function(req,res){
+            res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+            res.send(200);
         });
     
     movieRouter.use('/:movieId', function(req,res,next){
@@ -56,6 +61,12 @@ let routes = function (Movie){
             //         res.json(movie); 
             // });
         })
+
+        .options(function(req,res){
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,DELETE,OPTIONS');
+            res.send(200);
+        })
+        
         .put(function(req,res){
             req.movie.title = req.body.title;
             req.movie.actor = req.body.actor;
