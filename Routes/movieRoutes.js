@@ -72,6 +72,12 @@ let routes = function (Movie){
             req.movie.actor = req.body.actor;
             req.movie.genre = req.body.genre;
             req.movie.available = req.body.available;
+
+            
+            req.movie.items = req.body.items;
+            // req.movie._links = req.body._links;
+            req.movie.pagination = req.body.pagination;
+
             req.movie.save (function(err){
                 if(err)
                     res.status(500).send(err);
