@@ -75,7 +75,7 @@ let routes = function (Movie){
 
             
             req.movie.items = req.body.items;
-            // req.movie._links = req.body._links;
+            req.movie._links = req.body._links;
             req.movie.pagination = req.body.pagination;
 
             req.movie.save (function(err){

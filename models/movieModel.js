@@ -8,7 +8,7 @@ let movieModel = new Schema({
     available: {type: Boolean, default:false},
     
     items: {type: String},
-    // _links: {type: String},
+    _links: {type: String},
     pagination: {type: String}
 
 
