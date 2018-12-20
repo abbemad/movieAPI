@@ -4,7 +4,8 @@ let movieController = function(Movie){
         let movie = new Movie(req.body);
 
         movie.save();
-        res.status(201).send(movie);
+        res.status(201);
+        res.send(movie);
     }
 
     let get = function(req,res){
