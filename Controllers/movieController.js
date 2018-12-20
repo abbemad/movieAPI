@@ -2,11 +2,9 @@ let movieController = function(Movie){
 
     let post = function(req, res){
         let movie = new Movie(req.body);
-  
+
         movie.save();
         res.status(201).send(movie);
- 
-
     }
 
     let get = function(req,res){
@@ -24,7 +22,7 @@ let movieController = function(Movie){
         });
     }
 
-    return {
+    return{
         post: post,
         get: get
     }

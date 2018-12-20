@@ -30,21 +30,14 @@ let routes = function (Movie){
 
     movieRouter.route('/:movieId')
         .get(function(req,res){
-
             res.json(req.movie);
-            // Movie.findById(req.params.movieId, function(err,movie){
-            // if(err)
-            //     res.status(500).send(err);
-            //     else 
-            //         res.json(movie); 
-            // });
         })
 
         .options(function(req,res){
             res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,DELETE,OPTIONS');
             res.send(200);
         })
-        
+    
         .put(function(req,res){
             req.movie.title = req.body.title;
             req.movie.actor = req.body.actor;
@@ -59,6 +52,7 @@ let routes = function (Movie){
                 }  
             });
         })
+
         .patch(function(req,res){
             if(req.body._id)
                 delete req.body._id;
@@ -75,6 +69,7 @@ let routes = function (Movie){
                 }  
             });
         })
+        
         .delete(function(req,res){
             req.movie.remove(function(err){
                 if (err)
