@@ -3,9 +3,15 @@ let movieController = function(Movie){
     let post = function(req, res){
         let movie = new Movie(req.body);
 
-        movie.save();
-        res.status(201);
-        res.send(movie);
+        if(!req.body.title){
+            res.status(400);
+            res.send('Movie title required');
+        }
+        else{
+            movie.save();
+            res.status(201);
+            res.send(movie);
+        }
     }
 
     let get = function(req,res){
