@@ -35,7 +35,8 @@ let routes = function (Movie){
         })
 
         .get(function(req,res){
-            let home = 'http://localhost:8000/api/movies/';
+            // let home = 'http://localhost:8000/api/movies/';
+            let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
             let reqMovie = req.movie.toJSON();
             reqMovie._links = {
                 self: {
@@ -54,7 +55,6 @@ let routes = function (Movie){
             req.movie.title = req.body.title;
             req.movie.actor = req.body.actor;
             req.movie.genre = req.body.genre;
-            req.movie.available = req.body.available;
             
             req.movie.save (function(err){
                 if(err)

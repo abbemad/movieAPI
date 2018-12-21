@@ -4,8 +4,7 @@ let mongoose = require('mongoose'),
 let movieModel = new Schema({
     title: {type: String},
     actor: {type: String},
-    genre: {type: String},
-    available: {type: Boolean, default:false},
+    genre: {type: String}
 });
 
 module.exports= mongoose.model('Movie', movieModel);
