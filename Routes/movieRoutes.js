@@ -9,8 +9,9 @@ let routes = function (Movie){
         .post(movieController.post)
         .get(movieController.get)
 
-        .options(function(req,res){
+        .options(function(err,res){
             res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+            res.header('Allow','POST,GET,OPTIONS');
             res.send(200);
         });
     
@@ -29,14 +30,16 @@ let routes = function (Movie){
     });
 
     movieRouter.route('/:movieId')
-        .options(function(req,res){
+        .options(function(err,res){
             res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,DELETE,OPTIONS');
+            res.header('Allow','GET,PUT,DELETE,OPTIONS');
+            res.header('Accept','application/json');
             res.send(200);
         })
 
         .get(function(req,res){
-            // let home = 'http://localhost:8000/api/movies/';
-            let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
+            let home = 'http://localhost:8000/api/movies/';
+            // let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
             let reqMovie = req.movie.toJSON();
             reqMovie._links = {
                 self: {
