@@ -15,8 +15,8 @@ let movieController = function(Movie){
     };
 
     let get = function(req,res){
-        let home = 'http://localhost:8000/api/movies/';
-        // let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
+        // let home = 'http://localhost:8000/api/movies/';
+        let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
         // let query = {};
         
         // Movie.find(query, function(err,movies){
