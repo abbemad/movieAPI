@@ -26,7 +26,9 @@ let movieController = function(Movie){
               res.status(500).send(err);
              else 
                 res.json(movies); 
-        });
+        }
+        
+        );
     }
 
     return{

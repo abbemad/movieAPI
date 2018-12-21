@@ -2,7 +2,7 @@ let express = require('express');
 
 let routes = function (Movie){
     let movieRouter = express.Router();
-    let movieController = require('../Controllers/movieController')(Movie)
+    let movieController = require('../Controllers/movieController')(Movie);
 
 
     movieRouter.route('/')
@@ -29,15 +29,27 @@ let routes = function (Movie){
     });
 
     movieRouter.route('/:movieId')
-        .get(function(req,res){
-            res.json(req.movie);
-        })
-
         .options(function(req,res){
             res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,DELETE,OPTIONS');
             res.send(200);
         })
-    
+
+        .get(function(req,res){
+            let home = 'http://localhost:8000/api/movies/';
+            let reqMovie = req.movie.toJSON();
+            reqMovie._links = {
+                self: {
+                    href: home + reqMovie._id
+                },
+                collection: {
+                    href: home
+                }
+            };
+
+            res.json(reqMovie);
+            
+        })
+
         .put(function(req,res){
             req.movie.title = req.body.title;
             req.movie.actor = req.body.actor;
@@ -52,7 +64,7 @@ let routes = function (Movie){
                 }  
             });
         })
-
+        
         .patch(function(req,res){
             if(req.body._id)
                 delete req.body._id;
@@ -69,7 +81,6 @@ let routes = function (Movie){
                 }  
             });
         })
-        
         .delete(function(req,res){
             req.movie.remove(function(err){
                 if (err)
