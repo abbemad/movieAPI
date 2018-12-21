@@ -2,7 +2,7 @@ let express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser');
 
-let db = mongoose.connect('mongodb://localhost/movieAPI');
+db = mongoose.connect('mongodb://localhost/movieAPI');
 
 let Movie = require('./models/movieModel');
 

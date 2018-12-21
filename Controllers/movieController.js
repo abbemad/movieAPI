@@ -1,17 +1,19 @@
-let movieController = function(Movie){
+let movieController = function (Movie){
 
-    let post = function(req, res){
-        let movie = new Movie(req.body);
-
-        if(!req.body.title){
-            res.status(400);
-            res.send('Movie title required');
+    let post = function (req, res){
+        let movie = new Movie();
+            movie.title = req.body.title;
+            movie.actor = req.body.actor;
+            movie.genre = req.body.genre;
+        if(movie.title == null || movie.actor == null || movie.genre == null){
+            return res.status(400).send("No empty field");
         }
-        else{
-            movie.save();
-            res.status(201);
-            res.send(movie);
-        }
+        movie.save(function (err){
+            if(err){
+                console.log(err);
+            }
+            return res.status(201).json({'res': 'created'});
+        });
     };
 
     let get = function(req,res){
