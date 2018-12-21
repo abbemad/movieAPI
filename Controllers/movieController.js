@@ -5,6 +5,7 @@ let movieController = function (Movie){
             movie.title = req.body.title;
             movie.actor = req.body.actor;
             movie.genre = req.body.genre;
+            
         if(movie.title == null || movie.actor == null || movie.genre == null){
             return res.status(400).send("No empty field");
         }
@@ -18,7 +19,6 @@ let movieController = function (Movie){
 
     let get = function(req,res){
         // let home = 'http://localhost:8000/api/movies/';
-        // let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
         let home = 'http://145.24.222.136:8000/api/movies/';
         // let query = {};
         
@@ -31,61 +31,58 @@ let movieController = function (Movie){
         
         // );
 
-        Movie.find(function(err,movies){
-            if(err){
-                 res.status(500).send(err);
-                 
-            }
-                let start = req.query.start !== undefined ? parseInt(req.query.start) : null;
-                let limit = req.query.limit !== undefined ? parseInt(req.query.limit) : null;
-                
-            if(start == 0){
-                start = 1;
-            }
-            
-            let pagination = {
-                totalPages: limit !== null ? Math.ceil(movies.length / limit) : 1,
-                currentItems: limit !== null ? limit : movies.length,
-                currentPage: (start !== null && limit !== null) ? Math.ceil(start / limit) : 1
-            };
+    Movie.find(function(err,movies){
+        if(err){
+            res.status(500).send(err); 
+        }
+            let start = req.query.start !== undefined ? parseInt(req.query.start) : null;
+            let limit = req.query.limit !== undefined ? parseInt(req.query.limit) : null;
 
-            let AllResMovies = {
-                items: [],
-                _links: {
-                self: {href: home}
-                        },
+        if(start == 0){
+            start = 1;
+        }
+    
+        let pagination = {
+            totalPages: limit !== null ? Math.ceil(movies.length / limit) : 1,
+            currentItems: limit !== null ? limit : movies.length,
+            currentPage: (start !== null && limit !== null) ? Math.ceil(start / limit) : 1
+        };
 
-            pagination: {
-                totalItems: movies.length,
-                totalPages: pagination.totalPages,
-                currentItems: pagination.currentItems,
-                currentPage: pagination.currentPage,
-            
+        let AllResMovies = {
+            items: [],
             _links: {
-                next: {
-                    page: pagination.totalPages !== pagination.currentPage ? pagination.currentPage + 1 : pagination.currentPage,
-                    href: home + '?start=' + (start + pagination.currentItems) + '&limit=' + (limit || 5)
-                },
+            self: {href: home}
+                    },
+        pagination: {
+            totalItems: movies.length,
+            totalPages: pagination.totalPages,
+            currentItems: pagination.currentItems,
+            currentPage: pagination.currentPage,
+        
+        _links: {
+            next: {
+                page: pagination.totalPages !== pagination.currentPage ? pagination.currentPage + 1 : pagination.currentPage,
+                href: home + '?start=' + (start + pagination.currentItems) + '&limit=' + (limit || 5)
+            },
 
-                previous: {
-                    page: (pagination.currentPage !== 1 ? pagination.currentPage - 1 : 1),
-                    href: home + '?start=' + (start >= pagination.currentItems ? start - pagination.currentItems : 0) + '&limit=' + (limit || 5)
-                },
+            previous: {
+                page: (pagination.currentPage !== 1 ? pagination.currentPage - 1 : 1),
+                href: home + '?start=' + (start >= pagination.currentItems ? start - pagination.currentItems : 0) + '&limit=' + (limit || 5)
+            },
 
-                first: {
-                    page: 1,
-                    href: home + (limit ? '?limit=' + limit : '')
-                },
+            first: {
+                page: 1,
+                href: home + (limit ? '?limit=' + limit : '')
+            },
 
-                last: {
-                    page: pagination.totalPages,
-                    href: home + '?start=' + (limit ? (movies.length + 1) - limit : 0) + '&limit=' + (limit || 5)
-                }
+            last: {
+                page: pagination.totalPages,
+                href: home + '?start=' + (limit ? (movies.length + 1) - limit : 0) + '&limit=' + (limit || 5)
             }
         }
-    };
+    }
+};
 
-    
             for (let i = start || 0, length = movies.length, l = 0; i < length && (limit !== null ? l < limit : 1); i++, l++) {
                 let movie = movies[i];
                 AllResMovies.items.push({

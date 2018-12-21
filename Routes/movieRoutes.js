@@ -19,7 +19,7 @@ let routes = function (Movie){
                 res.status(500).send(err);
                 else if(movie){
                     req.movie = movie;
-                    next();
+                     next();
                 }
                     else{
                         res.status(404).send('Movie not found');
@@ -36,7 +36,6 @@ let routes = function (Movie){
 
         .get(function(req,res){
             // let home = 'http://localhost:8000/api/movies/';
-            // let home = 'https://stud.hosted.hr.nl/0920859/fullstack/';
             let home = 'http://145.24.222.136:8000/api/movies/';
             let reqMovie = req.movie.toJSON();
             reqMovie._links = {
