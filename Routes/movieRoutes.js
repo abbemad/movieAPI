@@ -89,7 +89,7 @@ let routes = function (Movie){
                 if (err)
                     res.status(500).send(err);
                 else{
-                    res.status(204).send('Removed');
+                    res.status(204).send('Movie deleted');
                 }
             });
         });
